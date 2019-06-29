@@ -14,7 +14,7 @@ import P5Wrapper from 'react-p5-wrapper';
 import sketch from '../components/Sketch';
 import SeashoreBlue from '../themes/SeashoreBlue.json';
 import Seashore from '../themes/Seashore.json';
-const server = "http://localhost:5000";
+const server = "http://localhost:5000/";
 
 var analyser;
 var context;
@@ -377,7 +377,6 @@ class Timer extends Component {
         }
     }
     resetState() {
-        clearInterval(this.state.intervalId);
         if(this.state.recordingID)
             clearInterval(this.state.recordingID);
         if(this.state.pomodoro) {
@@ -394,6 +393,11 @@ class Timer extends Component {
         }
     }
     endNormal() {
+        clearInterval(this.state.intervalId);
+        let title = this.state.input;
+        let startTime = this.state.startTime;
+        let pattern = this.state.pattern;
+        this.resetState()
         let elapse = this.state.minutes * 60 + this.state.seconds;
         if(this.state.showHours)
             elapse = this.state.hours * 3600 + this.state.minutes * 60 + this.state.seconds;
@@ -408,12 +412,12 @@ class Timer extends Component {
             },
             body: JSON.stringify({
                 userId: userid,
-                title: this.state.input,
-                startTime: this.state.startTime,
+                title: title,
+                startTime: startTime,
                 endTime: new Date(),
                 elapse: elapse,
                 isPomodoro: false,
-                pattern: this.state.pattern
+                pattern: pattern
             })
         })
         .then(
@@ -423,12 +427,17 @@ class Timer extends Component {
                 });
             }
         )
-        .then(()=>this.resetState())
         .catch((err) => console.log('Error :', err));
     }
 
     endPomodoro() {
         this.sendNotification("Pomodoro Timer End!");
+        clearInterval(this.state.intervalId);
+        let title = this.state.input;
+        let startTime = this.state.startTime;
+        let pomoMinutes = this.state.pomodoroMinutes;
+        let pattern = this.state.pattern;
+        this.resetState()
         fetch(server+ "task/", {
             method: 'POST',
             headers: {
@@ -437,12 +446,12 @@ class Timer extends Component {
             },
             body: JSON.stringify({
                 userId: userid,
-                title: this.state.input,
-                startTime: this.state.startTime,
+                title: title,
+                startTime: startTime,
                 endTime: new Date(),
-                elapse: this.state.pomodoroMinutes*60,
+                elapse: pomoMinutes*60,
                 isPomodoro: true,
-                pattern: this.state.pattern
+                pattern: pattern
             })
         })
         .then(
@@ -452,7 +461,6 @@ class Timer extends Component {
                 });
             }
         )
-        .then(()=>this.resetState())
         .catch((err) => console.log('Error :', err));
     }
 
@@ -531,6 +539,7 @@ class Timer extends Component {
                         this.setState((prevstate, props) =>({hours: prevstate.hours - 1, minutes: 59, seconds: 59}));
                     }
                     else {
+                        clearInterval(this.state.intervalId);
                         this.endPomodoro();//End Pomodoro
                     }
                 }
