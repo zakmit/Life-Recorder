@@ -1,0 +1,23 @@
+{
+    "name":"Seashore",
+    "imgSize":100,
+    "radius":120,
+    "mobileimgSize":75,
+    "mobileradius":90,
+    "imgs":[ "/img/Seashore/000.png", "/img/Seashore/001.png", "/img/Seashore/002.png",
+        "/img/Seashore/003.png", "/img/Seashore/004.png", "/img/Seashore/005.png",
+        "/img/Seashore/006.png", "/img/Seashore/007.png", "/img/Seashore/008.png",
+        "/img/Seashore/009.png", "/img/Seashore/010.png", "/img/Seashore/011.png",
+        "/img/Seashore/012.png", "/img/Seashore/013.png", "/img/Seashore/014.png",
+        "/img/Seashore/015.png", "/img/Seashore/016.png", "/img/Seashore/017.png",
+        "/img/Seashore/018.png", "/img/Seashore/019.png", "/img/Seashore/020.png",
+        "/img/Seashore/021.png", "/img/Seashore/022.png", "/img/Seashore/023.png",
+        "/img/Seashore/024.png", "/img/Seashore/025.png", "/img/Seashore/026.png",
+        "/img/Seashore/027.png", "/img/Seashore/028.png", "/img/Seashore/029.png",
+        "/img/Seashore/030.png", "/img/Seashore/031.png", "/img/Seashore/032.png",
+        "/img/Seashore/033.png", "/img/Seashore/034.png", "/img/Seashore/035.png",
+        "/img/Seashore/036.png", "/img/Seashore/037.png", "/img/Seashore/038.png",
+        "/img/Seashore/039.png", "/img/Seashore/040.png"]
+
+}
+    

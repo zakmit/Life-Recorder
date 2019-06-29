@@ -1,0 +1,12 @@
+{
+    "name":"Seashore[Blue]",
+    "imgSize":100,
+    "radius":120,
+    "mobileimgSize":75,
+    "mobileradius":90,
+    "imgs":[ "/img/Seashore/001.png", "/img/Seashore/004.png", "/img/Seashore/009.png",
+        "/img/Seashore/010.png", "/img/Seashore/019.png", "/img/Seashore/020.png",
+        "/img/Seashore/025.png", "/img/Seashore/026.png",
+        "/img/Seashore/030.png", "/img/Seashore/031.png", "/img/Seashore/035.png",
+        "/img/Seashore/039.png", "/img/Seashore/040.png"]
+}

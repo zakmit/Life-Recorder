@@ -1,0 +1,54 @@
+{
+  "name": "life-recorder",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "firebase": "^5.11.1",
+    "history": "^4.9.0",
+    "moment": "^2.24.0",
+    "node-sass": "^4.12.0",
+    "normalize.css": "^8.0.1",
+    "p5": "^0.8.0",
+    "query-string": "^6.8.1",
+    "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
+    "react-day-picker": "^7.3.0",
+    "react-dom": "^16.8.6",
+    "react-firebaseui": "^3.1.2",
+    "react-infinite-scroller": "^1.2.4",
+    "react-p5-wrapper": "^1.2.1",
+    "react-responsive": "^6.1.2",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.0.1",
+    "react-svg": "^10.0.9",
+    "react-switch": "^5.0.0",
+    "react-table": "^6.10.0",
+    "react-with-direction": "^1.3.0",
+    "reactjs-popup": "^1.4.1",
+    "recharts": "^1.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^3.5.2"
+  }
+}

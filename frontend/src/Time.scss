@@ -1,0 +1,891 @@
+@import "./airelon.css";
+@import "./NotoSerif.css";
+
+$ModernFontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Aileron, sans-serif;
+$TraditionalFontFamily: NotoSerif, serif;
+$checked-color: #e02929;
+$unchecked-color: rgb(255, 218, 8);
+$support-color:rgb(98, 107, 110);
+$pressed-color:rgb(62, 68, 70);
+$focus-outline-color:rgb(194, 200, 202);
+$border-color:rgba(194, 200, 202, 0.692);
+
+html, body {
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+button:focus {
+    outline:0;
+}
+div:focus {
+    outline: none;
+}
+input {
+    border-radius: 0%;
+}
+.icon-wrapper div{
+    text-align:center;
+}
+.recharts-legend-item-text {
+    font-weight: 300;
+}
+.iconButton {
+    padding: 5px 11px;
+    border: none;
+    display: block;
+    background-color: white;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+}
+.timeButton {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    padding: 0.3em 0.3em;
+    border: none;
+    display: block;
+    background: none;
+    font-size: 1em;
+    font-weight: 300;
+    -webkit-transition-duration: 0.2s; /* Safari */
+    transition-duration: 0.2s;
+}
+.timeButton:hover {
+    color: $support-color;
+    border-bottom: 0.005em solid $support-color;
+}
+.timeButton:active {
+    color: $pressed-color;
+    border-bottom: 0.005em solid $pressed-color;
+}
+
+.iconButton:hover {
+    background-color: $focus-outline-color; /* Green */
+}
+.timeButtonPress {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    padding: 0.3em 0.3em;
+    border: none;
+    display: block;
+    background: none;
+    color: $pressed-color;
+    border-bottom: 0.005em solid $pressed-color;
+    font-size: 1em;
+    font-weight: 300;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+}
+
+.iconButtonPro {
+    padding: 3px 7px;
+    border: none;
+    display: block;
+    background-color: white;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+}
+.iconButtonPro:hover {
+    background-color: $focus-outline-color; /* Green */
+}
+
+.icons {
+    display: block;
+    margin: auto;
+    height: 20px;
+    width: 26.45px;
+}
+.iconsPro {
+    display: block;
+    margin: auto;
+    width: 29.1px;
+    height: 22px;
+}
+.monthPickerMonths {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.monthPickerMonth {
+    font-size: 1.2em;
+    font-weight: 300;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.monthPickerMonth:hover {
+    background-color: rgb(210, 227, 241);
+    border-radius: 50%;
+}
+.monthPickerMonthSelected {
+    font-size: 1.2em;
+    font-weight: 300;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #67b1d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50%;
+}
+.monthPickerYear {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.monthPickerYear span {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.monthPickerYear button {
+    margin-top: auto;
+    margin-bottom: auto;
+    background: none;
+    border: none;
+    font-weight: 500;
+    color: #8B9898;
+}
+.monthPickerYear button:hover {
+    opacity: 0.8;
+}
+.currentMonth {
+    font-weight: 500;
+    color: #D0021B;
+}
+.currentSelMonth {
+    font-weight: 500;
+}
+
+.yearInput {
+    height: 30px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.iconOut {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $border-color;
+    position: absolute;
+    right: 36px;
+    top: 5.5em;
+}
+.dayPicker .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    background-color:#67b1d6 !important;
+    color: white !important;
+}
+.DayPicker-Day--disabled {
+    color: rgb(240, 240, 240) !important;
+}
+.timeOut {
+    display: flex;
+    flex-direction: row;
+    width: -moz-fit-content;
+    height: -moz-fit-content;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.timeSelect {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background:#c5c5c5af;
+}
+.timeSelectPro {
+    height: 25vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background:#c5c5c5af;
+}
+.chartDescription {
+    font-weight: 300;
+    margin-left: 20px;
+}
+.chartSup {
+    margin-left: 40px;
+    margin-right: 40px;
+    font-weight: 300;
+}
+.chartSup b{
+    font-size: 1.2em;
+    font-weight: 500;
+}
+.indieChart {
+    position: relative;
+}
+.chartOuter {
+    grid-column: 2;
+    overflow-y: scroll;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background:white;
+}
+.chartOuterPro {
+    overflow-y: scroll;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background:white;
+    height: 45vh;
+}
+.datePickerOuter {
+    text-align: center;
+}
+.recharts-wrapper {
+    margin: auto;
+}
+.dateInputOuter {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    
+}
+.timeInput {
+    text-align: center;
+    border: none;
+    font-size: 1.1em;
+    font-weight: 300;
+    padding: 10px;
+    width:100px;
+    background: none;
+    border-bottom: 0.005em solid $pressed-color;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+}
+.timeInput:focus {
+    border-color: $support-color;
+    outline: none;
+    box-shadow: 0 4px 2px -2px $focus-outline-color;
+    -webkit-transition-duration: 0.3s; /* Safari */
+    transition-duration: 0.3s;
+}
+.statMain {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin: auto;
+    margin-top: 3%;
+    width: 80%;
+    background: none;
+    height: 70vh;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.statMainPro {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 3%;
+    width: 80%;
+    background: none;
+    height: 70vh;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.iconOutPro {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid $focus-outline-color;
+    position: absolute;
+    right: 28px;
+    bottom: 28px;
+}
+.dataCountSetter {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: fit-content;
+    width: -moz-fit-content;
+    right: 1em;
+    top: 3em;
+    margin-right: 1em;
+    border: 1px solid $focus-outline-color;
+}
+.dataCountSetter button {
+    border: none;
+    background: none;
+    font-size: 0.9em;
+    font-weight: 300;
+    padding: 3px 5px;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.countButton:hover {
+    background-color: #d8d8d8 !important;
+}
+.countButton:active {
+    background-color: #c5c5c5 !important;
+}
+.countButtonSel {
+    background-color: #c5c5c5 !important;
+}
+//week picker from official example
+.weekPicker .DayPicker-Month {
+    border-collapse: separate;
+  }
+  .weekPicker .DayPicker-WeekNumber {
+    outline: none;
+  }
+  .weekPicker .DayPicker-Day {
+    outline: none;
+    border: 1px solid transparent;
+  }
+  .weekPicker .DayPicker-Day--hoverRange {
+    background-color: #F0F8FF !important;
+    border-radius: 0 !important;
+  }
+
+  .weekPicker .DayPicker-Day--selectedRange {
+    background-color: #90c8e4 !important;
+    border-top-color: #67b1d6af;
+    border-bottom-color: #67b1d6af;
+    border-left-color: #90c8e4;
+    border-right-color: #90c8e4;
+  }
+  .weekPicker .DayPicker-Day--selectedRange:not(.DayPicker-Day--outside).DayPicker-Day--selected,
+  .weekPicker .DayPicker-Day--hoverRange:not(.DayPicker-Day--outside).DayPicker-Day--selected {
+    border-radius: 0 ;
+    color: black !important;
+  }
+  .weekPicker .DayPicker-Day--selectedRange.DayPicker-Day--outside.DayPicker-Day--selected,
+  .weekPicker .DayPicker-Day--hoverRange.DayPicker-Day--outside.DayPicker-Day--selected {
+    border-radius: 0 ;
+  }
+  .weekPicker .DayPicker-Day--selectedRangeStart {
+    background-color: #67b1d6af !important;
+    border-left: 1px solid #67b1d6af;
+  }
+
+  .weekPicker .DayPicker-Day--selectedRangeEnd {
+    background-color: #67b1d6af !important;
+    border-right: 1px solid #67b1d6af;
+  }
+
+  .weekPicker .DayPicker-Day--hoverRange:hover {
+    background-color: rgb(210, 227, 241) !important;
+  }
+//custompicker
+.customPicker .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+    background-color: #c5dce7e8 !important;
+    color: #218abb;
+  }
+.customPicker .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+    background-color: #67b1d6 !important;
+    color: white;
+}
+  .customPicker .DayPicker-Day--hoverRange:hover {
+    background-color: rgb(210, 227, 241) !important;
+  }
+  .customPicker .DayPicker-Day {
+    border-radius: 0 !important;
+  }
+  .customPicker .DayPicker-Day--start {
+    border-top-left-radius: 50% !important;
+    border-bottom-left-radius: 50% !important;
+  }
+  .customPicker .DayPicker-Day--end {
+    border-top-right-radius: 50% !important;
+    border-bottom-right-radius: 50% !important;
+  }
+.Timer-header {
+    margin-top: 1%;
+}
+.tradFont {
+    font-family: $TraditionalFontFamily;
+}
+.modernFont {
+    font-family: $ModernFontFamily;
+}
+.statTable {
+    left: 50%;
+    right: 50%;
+    margin-top: 5%;
+    transform: translate(-50%, 0%);
+    background-color: rgba(255, 255, 255, 0.726);
+    width: 80%;
+    min-height: 50vh;
+    max-height: 60vh;
+}
+.rt-tr {
+    font-weight: 400;
+}
+.-pagination input, .-pagination select {
+    font-weight: 300 !important;
+}
+.pagination-bottom {
+    font-weight: 300;
+}
+.currentTask {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 66px;
+    font-weight: 300;
+}
+.currentTaskPro {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 7.3vw;
+    font-weight: 300;
+}
+.currentTaskU700 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 51px;
+    font-weight: 300;
+}
+
+.todo-input {
+    text-align: center;
+    font-size: 1.2em;
+    border: 0.01em solid rgb(167, 172, 173);
+    min-width: 220px;
+    width: 10em;
+    padding: 0.01em;
+    padding-top: 0.12em;
+    padding-bottom: 0.12em;
+    font-weight: 200;
+}
+.todo-input:focus {
+    border-color: $focus-outline-color;
+    outline: none;
+    box-shadow: 0px 0px 3px 1px $focus-outline-color;
+}
+.PomoInput {
+    width: 20%;
+    min-width: 90px;
+    border: 0.01em solid rgb(167, 172, 173);
+    padding: 0px;
+    padding-left: 1em;
+    height: 50px;
+}
+.themeSelect {
+    width: 30%;
+    min-width: 150px;
+    font-size: 1em;
+    font-weight: 300; 
+    border: 0.01em solid rgb(167, 172, 173);
+    padding: 0px;
+    padding-left: 1em;
+    height: 50px;
+}
+.themeSelect:focus {
+    border-color: $focus-outline-color;
+    outline: none;
+    box-shadow: 0px 0px 3px 1px $focus-outline-color;
+}
+
+.GapforPomo {
+    width: 20px;
+}
+.settingDes {
+    max-width: 400px;
+    height: 100px;
+}
+.PomoInput:focus {
+    border-color: $focus-outline-color;
+    outline: none;
+    box-shadow: 0px 0px 3px 1px $focus-outline-color;
+}
+@mixin spaceBetCenter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.clockType {
+    width: 10em;
+    font-size: 1.2em;
+    min-width: 220px;
+    min-height: 30px;
+    @include spaceBetCenter;
+}
+
+@mixin clock {
+    font-weight: 200;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.BigClock {
+    font-size: 45px;
+    width: 500px;
+    @include clock;
+}
+.ProtraitBigClock {
+    font-size: 5vw;
+    width: 0.56vw;
+    @include clock;
+}
+.U700middleClock {
+    font-size: 4.8vw;
+    @include clock;
+}
+.ProtraitmiddleClock {
+    width: 95%;
+    font-size: 3.6vw;
+    @include clock;
+}
+.middleClock {
+    max-width: 700px;
+    min-width: 95%;
+    font-size: 32px;
+    @include clock;
+}
+.middleClock div {
+    margin-bottom: 0.05em;
+}
+
+
+@mixin startTimer {
+    min-width: 225px;
+    width: 10.1em;
+    font-size: 1.2em;
+    min-height: 30px;
+    font-weight: 200;
+    border: none;
+    padding: 0px;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.startPomoTimer {
+    background-color: rgb(224, 41, 41);
+    color: white;
+    @include startTimer
+}
+.splitLine {
+    width: 100%; height: 10px; border-bottom: 1px solid rgba(112, 112, 112, 0.781);
+}
+
+.startNorTimer {
+    background-color: rgb(255, 218, 8);
+    @include startTimer
+}
+.TimerControll {
+    width: 6em;
+    @include spaceBetCenter;
+}
+.TimerControll button {
+    font-weight: 100;
+    background: none;
+    padding: 0px;
+    margin-top: 25px;
+    border: none;
+    font-size: 0.8em;
+    transform: translate(0%, -50%);
+}
+.TimerControll button:hover {
+    border-bottom: 0.005em solid $support-color;
+    color: $support-color;
+}
+
+.TimerControllPro {
+    width: 6em;
+    @include spaceBetCenter;
+}
+.TimerControllPro button {
+    font-weight: 100;
+    background: none;
+    padding: 0px;
+    margin-top: 25px;
+    border: none;
+    font-size: 0.8em;
+    transform: translate(0%, -50%);
+}
+.TimerControllPro button:hover {
+    border-bottom: 0.005em solid $support-color;
+    color: $support-color;
+}
+.TimerControllU700 {
+    width: 6em;
+    min-width: 180px;
+    @include spaceBetCenter;
+}
+.background{
+    z-index: -2;
+    position: absolute;
+}
+.background  canvas{
+    z-index: -2;
+    position: absolute;
+}
+  
+.TimerControllU700 button {
+    font-weight: 100;
+    background: none;
+    padding: 0px;
+    margin-top: 50px;
+    border: none;
+    font-size: 29px;
+    transform: translate(0%, -50%);
+}
+.TimerControllU700 button:hover {
+    border-bottom: 0.005em solid $support-color;
+    color: $support-color;
+}
+
+#endButton {
+    transform: translate(0%, -50%);
+}
+
+.Slider {
+    margin-top: 10px;
+}
+
+@mixin Container {
+    font-weight: 300;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Protrait_SettingContainer {
+    text-align: right;
+    font-size: 20px;
+    width: 80%;
+    height: 60vh;
+    overflow: hidden;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.726);
+    justify-content: space-around;
+    @include Container
+}
+.Protrait_SettingContainer div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.SettingContainer {
+    text-align: right;
+    font-size: 20px;
+    min-width: 720px;
+    height: 70vh;
+    overflow: hidden;
+    max-width: 50%;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.726);
+    justify-content: space-around;
+    @include Container
+}
+.SettingContainer div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.TimeDiv{
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 5em;
+    font-weight: 100;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.TimeDiv div {
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+.Colon {
+    position: relative;
+    bottom: 0.1em;
+}
+
+
+/* Position and sizing of burger button */
+.bm-burger-button-normal {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    left: 36px;
+    top: 36px;
+  }
+
+  .bm-burger-button-protrait {
+    position: fixed;
+    width: 28px;
+    height: 28px;
+    left: 28px;
+    bottom: 28px;
+  }
+  
+  /* Color/shape of burger icon bars */
+  .bm-burger-button svg{
+    fill: $support-color;
+  }
+  
+  /* Color/shape of burger icon bars on hover*/
+  .bm-burger-button svg:hover{
+    fill: #a90000;
+  }
+  
+  /* Position and sizing of clickable cross button */
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+  }
+  
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: $support-color;
+  }
+    /*
+  Sidebar wrapper styles
+  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+  */
+  .bm-menu-wrap {
+    position: fixed;
+    height: 100%;
+  }
+  
+  /* General sidebar styles */
+  .bm-menu {
+    background: #c5c5c5f1;
+    padding: 2.5em 1.5em 0;
+    font-size: 1.15em;
+  }
+  /* Morph shape necessary with bubble or elastic */
+  .bm-morph-shape {
+    fill: #c5c5c5f1;
+  }
+  
+  /* Wrapper for item list */
+  .bm-item-list {
+    padding: 0 0.8em 0;
+  }
+.profileItem img {
+    max-width: 41px;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    margin: auto;
+    border-radius: 50%;    
+}
+
+.popup-content {
+    min-width: 300px!important;
+    animation: popup 0.4s;
+}
+
+@keyframes popup {
+    0%{
+        transform: scale(0);
+    }
+    100%{
+        transform: scale(1);
+    }
+  }
+  
+.profileItem {
+    display: flex;
+    height: 41px;
+    margin-right: 20px;
+    font-weight: 300;
+    vertical-align: middle;
+    flex-direction: column;
+    align-content: center;
+}
+
+.profileContainer {
+    display: flex;
+    flex-direction: row;
+}
+.displayName {
+    font-size: 0.6em;
+}
+.welcomeStranger {
+    font-size: 0.5em;
+}
+
+.email {
+    font-weight: 400;
+    font-size: 0.4em;
+}
+.munuButton {
+    background: none;
+    border: none;
+    color: black;
+    padding: 0px;
+    padding-top: 0.3em;
+    text-decoration: none;
+    font-weight: 200;
+    font-size: 2em;
+    display: inline-block;
+}
+.munuButton:hover {
+    color: $support-color;
+}
+  /* Individual item */
+.bm-item {
+    color: black;
+    padding-top: 0.3em;
+    text-decoration: none;
+    font-weight: 200;
+    font-size: 2em;
+    display: inline-block;
+}
+.bm-item:focus {
+    outline: none;
+}
+.bm-item:hover {
+    color: $support-color;
+}
+.githubLink {
+    font-size: 0.4em;
+    margin-right: 42px;
+    position: absolute;
+    bottom: 20px;
+}
+.githubLink:hover {
+    color: black;
+}
+.githubLink a {
+    color: black;
+    text-decoration: none;
+}
+.githubLink a:hover {
+    color: black;
+    text-decoration: none;
+    color: $support-color;
+    border-bottom: 0.005em solid $support-color;
+}
+  /* Styling of overlay */
+  .bm-overlay {
+    background: rgba(117, 117, 117, 0.3) !important;
+  }

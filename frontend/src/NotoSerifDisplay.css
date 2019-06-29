@@ -1,0 +1,108 @@
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Thin.ttf) format("opentype");
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-ExtraLight.ttf) format("opentype");
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Light.ttf) format("opentype");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Regular.ttf) format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Medium.ttf) format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-SemiBold.ttf) format("opentype");
+    font-weight: 600;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Bold.ttf) format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-ExtraBold.ttf) format("opentype");
+    font-weight: 800;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Black.ttf) format("opentype");
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-ThinItalic.ttf) format("opentype");
+    font-weight: 100;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-ExtraLightItalic.ttf) format("opentype");
+    font-weight: 200;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-LightItalic.ttf) format("opentype");
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-Italic.ttf) format("opentype");
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-MediumItalic.ttf) format("opentype");
+    font-weight: 500;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-SemiBoldItalic.ttf) format("opentype");
+    font-weight: 600;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-BoldItalic.ttf) format("opentype");
+    font-weight: 700;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-ExtraBoldItalic.ttf) format("opentype");
+    font-weight: 800;
+    font-style: italic;
+}
+@font-face {
+    font-family: NotoSerifDisplay;
+    src: url(/NotoSerifDisplay/NotoSerifDisplay-BlackItalic.ttf) format("opentype");
+    font-weight: 900;
+    font-style: italic;
+}
