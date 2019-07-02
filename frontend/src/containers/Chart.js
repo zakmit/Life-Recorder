@@ -767,7 +767,7 @@ class Chart extends Component {
                         </div>
                     </div>
                 </MediaQuery>
-                <MediaQuery query="(max-width: 800px)">
+                <MediaQuery query="(max-width: 799px)">
                     <div className="statMainPro">
                         <div className="timeSelectPro">
                             {timeButton}

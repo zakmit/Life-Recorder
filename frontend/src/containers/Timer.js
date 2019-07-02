@@ -397,13 +397,13 @@ class Timer extends Component {
         let title = this.state.input;
         let startTime = this.state.startTime;
         let pattern = this.state.pattern;
-        this.resetState()
         let elapse = this.state.minutes * 60 + this.state.seconds;
         if(this.state.showHours)
             elapse = this.state.hours * 3600 + this.state.minutes * 60 + this.state.seconds;
         if(this.state.pomodoro) {
             elapse = this.state.pomodoroMinutes * 60 - elapse;
         }
+        this.resetState()
         fetch(server+ "task/", {
             method: 'POST',
             headers: {
@@ -650,7 +650,7 @@ class Timer extends Component {
                         <div className="githubLink">If you have any suggestion or encounter any problem, feel free to submit an issue on <a href="https://github.com/zakmit/Life-Recorder">github</a>.</div>
                     </Menu>
                 </MediaQuery>
-                <MediaQuery query="(max-width: 900px)">
+                <MediaQuery query="(max-width: 899px)">
                     <div className = "background">
                         <P5Wrapper sketch={sketch} width={this.state.width} height={this.state.height} pattern={this.state.pattern} imgSize={this.state.mobileimgSize} imgs={this.state.themeImgs} radius={this.state.mobileradius}/>
                     </div>

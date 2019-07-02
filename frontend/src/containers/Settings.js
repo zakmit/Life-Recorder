@@ -45,7 +45,7 @@ class Settings extends Component {
                         </div>
                     </div>
                 </MediaQuery>
-                <MediaQuery query="(max-width: 900px)">
+                <MediaQuery query="(max-width: 899px)">
                     <div className="Protrait_SettingContainer">
                         <div className="form-group">
                             <select value={this.props.themeName} onChange={this.props.changeTheme} className="themeSelect" >

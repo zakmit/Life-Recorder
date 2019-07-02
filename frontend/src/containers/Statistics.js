@@ -7,7 +7,6 @@ import ReactSVG from 'react-svg'
 import Table from './Table'
 import Chart from './Chart'
 import Cards from './Cards'
-// import MediaQuery from 'react-responsive'
 
 const rightBorder = {
     borderRight: "1px solid rgb(194, 200, 202)"
@@ -41,7 +40,7 @@ class Statistics extends Component {
                     src="/icons/Cards.svg" className="icon-wrapper"/></button></NavLink>
                 </span>
             </MediaQuery>
-            <MediaQuery query="(max-width: 900px)">
+            <MediaQuery query="(max-width: 899px)">
                 <span className="iconOutPro">
                     <NavLink to="/statistics/chart"><button style={rightBorder} className="iconButtonPro"><ReactSVG beforeInjection={svg => {
                         svg.classList.add('iconsPro')

@@ -163,11 +163,11 @@ class Home extends Component {
                     {above}
                     {main}
                 </MediaQuery>
-                <MediaQuery maxWidth={900} minWidth={700}>
+                <MediaQuery maxWidth={899} minWidth={700}>
                     {abovePro}
                     {mainPro}
                 </MediaQuery>
-                <MediaQuery query="(max-width: 700px)">
+                <MediaQuery query="(max-width: 699px)">
                     {aboveU700}
                     {mainU700}
                 </MediaQuery>
