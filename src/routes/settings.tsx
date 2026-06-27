@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { AppNav } from '#/components/AppNav'
+import { BurgerNav } from '#/components/BurgerNav'
 import { SettingsForm } from '#/features/settings/SettingsForm'
 import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
 import {
@@ -38,7 +38,7 @@ function SettingsPage() {
 
   return (
     <div>
-      <AppNav />
+      <BurgerNav />
       <main className="mx-auto max-w-2xl p-6">
         <h1 className="mb-4 text-xl font-semibold">Settings</h1>
         {signedIn ? (

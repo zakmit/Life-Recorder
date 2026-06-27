@@ -28,7 +28,7 @@ export function createAuth() {
     }),
     // A provider is registered only when its credentials are present, so local
     // dev works with just one configured. Add a provider by: (1) adding its
-    // env vars, (2) adding a block here, (3) adding a sign-in button in AppNav.
+    // env vars, (2) adding a block here, (3) adding a sign-in button in BurgerNav.
     socialProviders: {
       ...(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
         ? {

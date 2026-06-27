@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
-import { AppNav } from '#/components/AppNav'
+import { BurgerNav } from '#/components/BurgerNav'
 import { HistoryCards } from '#/features/history/HistoryCards'
 import { HistoryTable } from '#/features/history/HistoryTable'
 import { TimeSummaryChart } from '#/features/charts/TimeSummaryChart'
@@ -33,7 +33,7 @@ function HistoryPage() {
 
   return (
     <div>
-      <AppNav />
+      <BurgerNav />
       <main className="mx-auto max-w-3xl p-6">
         <h1 className="mb-4 text-xl font-semibold">History</h1>
 

@@ -5,7 +5,7 @@ import { useAuthSession } from '#/auth/useAuthSession'
 import { createEntry } from '#/server/functions/entries'
 import { fetchPreferences } from '#/features/settings/preferences-client'
 import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
-import { AppNav } from '#/components/AppNav'
+import { BurgerNav } from '#/components/BurgerNav'
 import { PatternCanvas } from '#/components/PatternCanvas'
 import { themeByName } from '#/features/audio/themes'
 import { UnauthorizedError } from '#/server/auth'
@@ -97,7 +97,7 @@ function Home() {
         />
       </div>
 
-      <AppNav />
+      <BurgerNav />
 
       <TimerPanel
         pomodoroMinutes={preferences.pomoMinutes}
