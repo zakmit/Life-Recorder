@@ -95,7 +95,7 @@ export function TimerPanel({
       <div
         className="flex items-center tabular-nums leading-none"
         style={{
-          fontSize: 'clamp(3.5rem, 16vw, 10rem)',
+          fontSize: active ? 'var(--text-clock-running)' : 'var(--text-clock)',
           fontWeight: 100,
         }}
       >
@@ -168,7 +168,10 @@ export function TimerPanel({
 
       {active && (
         <div className="mt-4 flex flex-col items-center gap-4">
-          <div className="text-lg" style={{ fontWeight: 200 }}>
+          <div
+            style={{ fontWeight: 300, fontSize: 'var(--text-task)' }}
+            className="text-center"
+          >
             {state.title || '—'}
           </div>
           {/* Controls (legacy .TimerControll: space-between, thin, hover-underline). */}
