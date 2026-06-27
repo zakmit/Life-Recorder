@@ -60,7 +60,7 @@ function Home() {
         <TimerPanel
           pomodoroMinutes={preferences.pomoMinutes}
           showHours={preferences.showHours}
-          canRecord={signedIn && !isPending}
+          canPersist={signedIn && !isPending}
           onComplete={handleComplete}
         />
       </main>

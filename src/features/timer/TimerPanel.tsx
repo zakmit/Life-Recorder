@@ -8,27 +8,32 @@ import type { CompletedTimer } from './useTimer'
 export type TimerPanelProps = {
   pomodoroMinutes?: number
   showHours?: boolean
-  canRecord: boolean
+  /** Whether completed sessions are persisted (true for signed-in users). */
+  canPersist: boolean
   onComplete?: (entry: CompletedTimer) => void | Promise<void>
 }
 
 /**
  * The interactive timer surface. Client-only behavior (intervals, microphone,
  * canvas) is owned by `useTimer` and `PatternCanvas`; this component is the
- * shell. Anonymous visitors see the shell but cannot start a recording.
+ * shell. Anyone can run the timer; only signed-in users persist their sessions.
  */
 export function TimerPanel({
   pomodoroMinutes = 10,
   showHours = true,
-  canRecord,
+  canPersist,
   onComplete,
 }: TimerPanelProps) {
   const [savedMsg, setSavedMsg] = useState<string | null>(null)
   const timer = useTimer({
     pomodoroMinutes,
     onComplete: async (entry) => {
-      await onComplete?.(entry)
-      setSavedMsg('Saved your session.')
+      if (canPersist) {
+        await onComplete?.(entry)
+        setSavedMsg('Saved your session.')
+      } else {
+        setSavedMsg('Session finished. Sign in to save your history.')
+      }
       timer.reset()
     },
   })
@@ -81,10 +86,8 @@ export function TimerPanel({
         {!active && (
           <button
             type="button"
-            className="rounded bg-emerald-600 px-6 py-2 text-white disabled:opacity-50"
+            className="rounded bg-emerald-600 px-6 py-2 text-white"
             onClick={() => void timer.start()}
-            disabled={!canRecord}
-            title={canRecord ? undefined : 'Sign in to record your time'}
           >
             Start
           </button>
@@ -118,9 +121,9 @@ export function TimerPanel({
         )}
       </div>
 
-      {!canRecord && !active && (
+      {!canPersist && !active && (
         <p className="text-sm text-slate-500">
-          Sign in to record and save your sessions.
+          You can try the timer now. Sign in to save your sessions to history.
         </p>
       )}
 
