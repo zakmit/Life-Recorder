@@ -1,5 +1,11 @@
-import { getSessionUser } from '#/auth/session'
 import type { SessionUser } from '#/auth/session'
+
+/**
+ * Client-safe auth primitives. This module deliberately imports no server-only
+ * code so it can be referenced from route loaders and components (e.g. to catch
+ * `UnauthorizedError`). The request-bound `requireUser` lives in
+ * `auth.server.ts`.
+ */
 
 /**
  * Error thrown when a protected server function is called without a valid
@@ -20,14 +26,4 @@ export class UnauthorizedError extends Error {
 export function assertUser(user: SessionUser | null): SessionUser {
   if (!user) throw new UnauthorizedError()
   return user
-}
-
-/**
- * Resolve and require the signed-in user for the current request. Throws
- * `UnauthorizedError` for anonymous or invalid sessions. The returned id is
- * the only trusted ownership key — never trust a client-supplied user id.
- */
-export async function requireUser(): Promise<SessionUser> {
-  const user = await getSessionUser()
-  return assertUser(user)
 }

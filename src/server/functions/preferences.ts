@@ -1,5 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
-import { requireUser } from '#/server/auth'
+import { requireUser } from '#/server/auth.server'
 import { getRepositories } from '#/server/repositories'
 import { preferenceUpdateSchema } from '#/server/validation'
 import type { PreferenceUpdateInput } from '#/server/validation'
