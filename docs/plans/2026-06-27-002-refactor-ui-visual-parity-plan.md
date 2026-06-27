@@ -2,7 +2,7 @@
 title: "refactor: UI visual parity with the 2019 Life Recorder"
 type: refactor
 date: 2026-06-27
-status: active
+status: completed
 origin: docs/brainstorms/2026-06-27-ui-visual-parity-requirements.md
 execution: code
 ---
@@ -193,7 +193,26 @@ rendering of those points and the surrounding chrome change.
 
 ## Implementation Units
 
-### U1. Port fonts and wire font families
+> **Handover status (2026-06-27):** All 8 units implemented on branch
+> `refactor/modernization` (one commit per unit). Automated gates pass:
+> `npm run typecheck`, `npm run lint`, `npm test` (98 tests), `npm run build`,
+> `npx wrangler deploy --dry-run`. SSR smoke verified for `/`, `/history`,
+> `/settings`, `/api/auth/*` (HTTP 200, no SSR errors). Constraints hold: no
+> p5 / Sass / react-burger-menu; Aileron self-hosted (no CDN).
+>
+> **Execution corrections worth noting:** (1) The font plan was corrected — the
+> legacy app always rendered the system-sans + Aileron stack (`modernFont`); the
+> NotoSerif serif and the "thin serif clock" were never used. Only Aileron is
+> self-hosted; the clock is the system font at weight 100. (2) "Two themes" =
+> one Seashore PNG set with two image lists (Blue is the blue-toned subset).
+>
+> **Not done by design (user steer):** secondary-surface (settings/table/charts)
+> fidelity is intentionally light — clean and on-palette, not pixel-matched. The
+> user will fine-tune small visual details themselves. No automated visual/
+> screenshot diff was run (no browser tooling available in the session); parity
+> was verified against the legacy SCSS values and screenshots by construction.
+
+### U1. Port fonts and wire font families ✅
 
 **Goal:** Self-host the original fonts and make them the app's type families.
 
@@ -223,7 +242,7 @@ in `src/styles.css`. Define families in Tailwind v4 `@theme`
 **Verification:** Home clock renders in the thin display serif; build succeeds;
 no SSR error.
 
-### U2. Port the Seashore PNG set and theme definitions
+### U2. Port the Seashore PNG set and theme definitions ✅
 
 **Goal:** Bring over the watercolor image set and encode both themes.
 
@@ -251,7 +270,7 @@ params (`imgSize`, `radius`, mobile variants) for the canvas to consume.
 
 **Verification:** `themes.ts` typechecks; tests confirm subset + path validity.
 
-### U3. Render the watercolor spiral on PatternCanvas
+### U3. Render the watercolor spiral on PatternCanvas ✅
 
 **Goal:** Replace the abstract dot spiral with theme watercolor images.
 
@@ -283,7 +302,7 @@ effect + guards in `PatternCanvas.tsx`.
 
 **Verification:** Home shows the watercolor spiral; jsdom tests pass; no SSR error.
 
-### U4. Rebuild the home / timer screen to match Main.jpg
+### U4. Rebuild the home / timer screen to match Main.jpg ✅
 
 **Goal:** Lay out the signature home screen at parity.
 
@@ -324,7 +343,7 @@ verbatim into Tailwind/CSS, do not port Sass and do not approximate);
 **Verification:** Home matches `Main.jpg` at common widths; behavior tests pass;
 SSR 200.
 
-### U5. Replace top nav with the slide-in burger menu
+### U5. Replace top nav with the slide-in burger menu ✅
 
 **Goal:** Recreate the burger navigation + profile block.
 
@@ -380,7 +399,7 @@ the signed-in vs signed-out `userBlock` markup in
 matches `Menu.jpg` in both auth states (avatar + Hello/Stranger when out, avatar +
 name + email when in); SSR 200.
 
-### U6. Apply fluid clamp() scaling system
+### U6. Apply fluid clamp() scaling system ✅
 
 **Goal:** Smooth proportional scaling across width and zoom, no breakpoint jumps.
 
@@ -413,7 +432,7 @@ breakpoint logic. Do not introduce sizes the SCSS did not define.
 **Verification:** Manual resize from mobile→desktop width scales smoothly with no
 abrupt jumps; clock/controls stay centered and proportional.
 
-### U7. Style settings and history surfaces (reasonable, not strict)
+### U7. Style settings and history surfaces (reasonable, not strict) ✅
 
 **Goal:** Bring settings and history cleanly onto the identity. This is the
 secondary, **non-strict** tier — clean and consistent with the look, not an
@@ -462,7 +481,7 @@ judgment over pixel matching. No reproduction of the legacy `react-table` v6 /
 reference); the card spiral preview uses the real U3 image-spiral; existing
 behavior tests pass. Pixel parity is explicitly **not** required here.
 
-### U8. Verification pass and asset cleanup
+### U8. Verification pass and asset cleanup ✅
 
 **Goal:** Confirm parity, scaling, SSR safety, and no p5/Sass; tidy assets.
 
