@@ -2,12 +2,37 @@ import { createFileRoute } from '@tanstack/react-router'
 import { TimerPanel } from '#/features/timer/TimerPanel'
 import { useAuthSession } from '#/auth/useAuthSession'
 import { createEntry } from '#/server/functions/entries'
+import { fetchPreferences } from '#/features/settings/preferences-client'
+import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
 import { AppNav } from '#/components/AppNav'
+import { UnauthorizedError } from '#/server/auth'
+import type { PreferencesForm } from '#/features/settings/preferences-schema'
 import type { CompletedTimer } from '#/features/timer/useTimer'
 
-export const Route = createFileRoute('/')({ component: Home })
+type LoaderData = { preferences: PreferencesForm }
+
+export const Route = createFileRoute('/')({
+  component: Home,
+  loader: async (): Promise<LoaderData> => {
+    try {
+      const prefs = await fetchPreferences()
+      return {
+        preferences: {
+          themeName: prefs.themeName as PreferencesForm['themeName'],
+          pomoMinutes: prefs.pomoMinutes,
+          showHours: prefs.showHours,
+        },
+      }
+    } catch (err) {
+      // Anonymous visitors get the default timer shell.
+      if (err instanceof UnauthorizedError) return { preferences: DEFAULT_FORM }
+      throw err
+    }
+  },
+})
 
 function Home() {
+  const { preferences } = Route.useLoaderData()
   const { session, isPending } = useAuthSession()
   const signedIn = !!session?.user
 
@@ -33,6 +58,8 @@ function Home() {
           Life Recorder
         </h1>
         <TimerPanel
+          pomodoroMinutes={preferences.pomoMinutes}
+          showHours={preferences.showHours}
           canRecord={signedIn && !isPending}
           onComplete={handleComplete}
         />
