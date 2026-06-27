@@ -9,9 +9,9 @@ import type { PatternPoint } from './pattern'
  */
 export type AudioAnalyser = {
   /** Capture one processed pattern point by averaging `frames` samples. */
-  sample(frames?: number, intervalMs?: number): Promise<PatternPoint>
+  sample: (frames?: number, intervalMs?: number) => Promise<PatternPoint>
   /** Tear down the audio graph and release the microphone. */
-  close(): void
+  close: () => void
 }
 
 type AudioContextCtor = new () => AudioContext

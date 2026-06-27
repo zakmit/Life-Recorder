@@ -27,7 +27,7 @@ export function useAuthSession(): {
       .getSession()
       .then((res) => {
         if (!active) return
-        setSession((res.data as ClientSession) ?? null)
+        setSession((res.data) ?? null)
       })
       .finally(() => {
         if (active) setIsPending(false)

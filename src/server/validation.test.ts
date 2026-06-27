@@ -30,7 +30,7 @@ describe('preferenceUpdateSchema', () => {
     const parsed = preferenceUpdateSchema.parse({
       pomoMinutes: 30,
       userId: 'victim',
-    } as Record<string, unknown>)
+    })
     expect(parsed).not.toHaveProperty('userId')
   })
 })
@@ -64,7 +64,7 @@ describe('createEntrySchema', () => {
     const parsed = createEntrySchema.parse({
       ...base,
       userId: 'victim',
-    } as Record<string, unknown>)
+    })
     expect(parsed).not.toHaveProperty('userId')
   })
 

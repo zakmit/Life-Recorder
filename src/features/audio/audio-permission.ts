@@ -21,9 +21,9 @@ export async function queryMicPermission(): Promise<MicState> {
   try {
     if (navigator.permissions?.query) {
       const result = await navigator.permissions.query({
-        name: 'microphone' as PermissionName,
+        name: 'microphone',
       })
-      return result.state as MicState
+      return result.state
     }
   } catch {
     // Permissions API not available for "microphone"; fall through to prompt.
