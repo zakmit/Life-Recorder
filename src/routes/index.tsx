@@ -1,12 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useEffect, useMemo, useState } from 'react'
 import { TimerPanel } from '#/features/timer/TimerPanel'
 import { useAuthSession } from '#/auth/useAuthSession'
 import { createEntry } from '#/server/functions/entries'
 import { fetchPreferences } from '#/features/settings/preferences-client'
 import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
 import { AppNav } from '#/components/AppNav'
+import { PatternCanvas } from '#/components/PatternCanvas'
+import { themeByName } from '#/features/audio/themes'
 import { UnauthorizedError } from '#/server/auth'
 import type { PreferencesForm } from '#/features/settings/preferences-schema'
+import type { PatternPoint } from '#/features/audio/pattern'
 import type { CompletedTimer } from '#/features/timer/useTimer'
 
 type LoaderData = { preferences: PreferencesForm }
@@ -31,10 +35,39 @@ export const Route = createFileRoute('/')({
   },
 })
 
+// The legacy app seeded an idle spiral of random points (49) so the background
+// is filled before any recording. Reproduce that for the resting screen.
+function seedPattern(count = 49): Array<PatternPoint> {
+  return Array.from({ length: count }, () => [
+    Math.floor(Math.random() * 128),
+    Math.floor(Math.random() * 128),
+  ])
+}
+
+function useViewportSize() {
+  const [size, setSize] = useState({ width: 1200, height: 800 })
+  useEffect(() => {
+    const update = () =>
+      setSize({ width: window.innerWidth, height: window.innerHeight })
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
+  return size
+}
+
 function Home() {
   const { preferences } = Route.useLoaderData()
   const { session, isPending } = useAuthSession()
   const signedIn = !!session?.user
+
+  const theme = themeByName(preferences.themeName)
+  const { width, height } = useViewportSize()
+  const seed = useMemo(() => seedPattern(), [])
+  const [livePattern, setLivePattern] = useState<ReadonlyArray<PatternPoint>>([])
+
+  // Show the live recording pattern once it has points, else the idle seed.
+  const spiralPattern = livePattern.length > 0 ? livePattern : seed
 
   async function handleComplete(entry: CompletedTimer) {
     if (!signedIn) return
@@ -51,19 +84,28 @@ function Home() {
   }
 
   return (
-    <div>
-      <AppNav />
-      <main className="py-8">
-        <h1 className="mb-2 text-center text-2xl font-semibold">
-          Life Recorder
-        </h1>
-        <TimerPanel
-          pomodoroMinutes={preferences.pomoMinutes}
-          showHours={preferences.showHours}
-          canPersist={signedIn && !isPending}
-          onComplete={handleComplete}
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Full-viewport watercolor spiral background (legacy .background, z behind). */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <PatternCanvas
+          pattern={spiralPattern}
+          theme={theme}
+          width={width}
+          height={height}
+          imgSize={theme.imgSize}
+          radius={theme.radius}
         />
-      </main>
+      </div>
+
+      <AppNav />
+
+      <TimerPanel
+        pomodoroMinutes={preferences.pomoMinutes}
+        showHours={preferences.showHours}
+        canPersist={signedIn && !isPending}
+        onComplete={handleComplete}
+        onPatternChange={setLivePattern}
+      />
     </div>
   )
 }
