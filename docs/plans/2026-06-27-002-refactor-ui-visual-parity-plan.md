@@ -119,13 +119,18 @@ Carried from origin (docs/brainstorms/2026-06-27-ui-visual-parity-requirements.m
   *between* those anchors. It must not make any surface look different from the
   SCSS at the sizes the SCSS defined.
 
-- **Fonts: self-host, weight-mapped `@font-face`.** Port NotoSerif (18 TTF) and
-  Aileron (17 OTF) from `obsolete-2019:frontend/public/`. For the clock display
-  serif, the original referenced `NotoSerifDisplay`/`SourceSerifPro` but **those
-  font files are not on the branch** (only the CSS refs). Resolution: self-host
-  **NotoSerifDisplay** (thin weights) fetched from Google Fonts into
-  `public/fonts/`, matching the original's intended thin serif numerals. Wire via
-  `@font-face` in `src/styles.css` (Tailwind v4 `@theme` font families), not Sass.
+- **Fonts: system-sans with self-hosted Aileron fallback (corrected during
+  execution).** Tracing the legacy `Timer.js`, `altFont` defaults `false` and its
+  toggle was commented out, so the app **always** renders `modernFont` =
+  `$ModernFontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", Aileron,
+  sans-serif`. The `tradFont`/NotoSerif serif is **never applied** — and there is
+  no serif clock. The thin clock numerals are simply the system font at
+  `font-weight: 100`/`200`. Resolution: do **not** port NotoSerif and do **not**
+  fetch NotoSerifDisplay/SourceSerifPro (all unused). Self-host **Aileron only**
+  (the cross-platform fallback) into `public/fonts/Aileron/`, and set the app font
+  family to the exact legacy stack via `@font-face` + Tailwind `@theme`, not Sass.
+  *(This supersedes the original plan's "thin serif clock" framing, which misread
+  the legacy font logic.)*
 
 - **Spiral: images on the existing canvas.** Extend `PatternCanvas` to draw the
   theme's watercolor PNGs along the existing spiral layout (ring/angle math
