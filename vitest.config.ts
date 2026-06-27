@@ -8,6 +8,10 @@ export default defineConfig({
   plugins: [viteReact()],
   resolve: {
     alias: {
+      'cloudflare:workers': new URL(
+        './src/test/cloudflare-workers-stub.ts',
+        import.meta.url,
+      ).pathname,
       '#': new URL('./src/', import.meta.url).pathname,
       '@': new URL('./src/', import.meta.url).pathname,
     },
