@@ -35,12 +35,34 @@ npm run db:migrate:local
 npm run db:migrate:remote
 ```
 
-## 3. Configure the GitHub OAuth app
+## 3. Configure an OAuth provider
+
+Configure at least one provider (Google and/or GitHub). A provider is only
+registered when both of its credentials are set, so you can run with just one.
+
+**Google** (Google Cloud Console → APIs & Services → Credentials → OAuth client):
+
+- **Authorized redirect URI:** `<deployed-url>/api/auth/callback/google`
+- Local: `http://localhost:3000/api/auth/callback/google`
+
+**GitHub** (Settings → Developer settings → OAuth Apps):
 
 - **Homepage URL:** your deployed URL (e.g. `https://life-recorder-new.<account>.workers.dev`)
 - **Authorization callback URL:** `<deployed-url>/api/auth/callback/github`
+- Local: `http://localhost:3000/api/auth/callback/github`
 
-For local development the callback is `http://localhost:3000/api/auth/callback/github`.
+### Adding another provider
+
+Better Auth supports many social providers. To add one (e.g. Discord, Apple):
+
+1. Add its `*_CLIENT_ID` / `*_CLIENT_SECRET` to `.dev.vars` (and as Wrangler
+   secrets in production) and to `AppSecrets` in `src/env.d.ts`.
+2. Add a conditional block in `src/auth/config.ts` under `socialProviders`
+   (mirror the existing Google/GitHub blocks).
+3. Add a sign-in button in `src/components/AppNav.tsx` calling
+   `signIn.social({ provider: '<name>', callbackURL: '/' })`.
+
+The callback URL is always `<BETTER_AUTH_URL>/api/auth/callback/<provider>`.
 
 ## 4. Set secrets
 
@@ -51,6 +73,9 @@ secrets:
 ```bash
 npx wrangler secret put BETTER_AUTH_SECRET   # a long random string
 npx wrangler secret put BETTER_AUTH_URL       # your deployed https URL
+# At least one provider pair:
+npx wrangler secret put GOOGLE_CLIENT_ID
+npx wrangler secret put GOOGLE_CLIENT_SECRET
 npx wrangler secret put GITHUB_CLIENT_ID
 npx wrangler secret put GITHUB_CLIENT_SECRET
 ```

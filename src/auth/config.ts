@@ -26,11 +26,26 @@ export function createAuth() {
         verification: schema.verification,
       },
     }),
+    // A provider is registered only when its credentials are present, so local
+    // dev works with just one configured. Add a provider by: (1) adding its
+    // env vars, (2) adding a block here, (3) adding a sign-in button in AppNav.
     socialProviders: {
-      github: {
-        clientId: env.GITHUB_CLIENT_ID,
-        clientSecret: env.GITHUB_CLIENT_SECRET,
-      },
+      ...(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
+        ? {
+            github: {
+              clientId: env.GITHUB_CLIENT_ID,
+              clientSecret: env.GITHUB_CLIENT_SECRET,
+            },
+          }
+        : {}),
+      ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+        ? {
+            google: {
+              clientId: env.GOOGLE_CLIENT_ID,
+              clientSecret: env.GOOGLE_CLIENT_SECRET,
+            },
+          }
+        : {}),
     },
     advanced: {
       // Cloudflare serves the demo over HTTPS; cookies stay locked down.

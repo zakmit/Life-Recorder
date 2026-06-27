@@ -40,15 +40,26 @@ export function AppNav() {
             </button>
           </>
         ) : (
-          <button
-            type="button"
-            className="rounded bg-slate-800 px-3 py-1 text-white"
-            onClick={() =>
-              void signIn.social({ provider: 'github', callbackURL: '/' })
-            }
-          >
-            Sign in with GitHub
-          </button>
+          <>
+            <button
+              type="button"
+              className="rounded bg-slate-800 px-3 py-1 text-white"
+              onClick={() =>
+                void signIn.social({ provider: 'google', callbackURL: '/' })
+              }
+            >
+              Sign in with Google
+            </button>
+            <button
+              type="button"
+              className="rounded bg-slate-200 px-3 py-1"
+              onClick={() =>
+                void signIn.social({ provider: 'github', callbackURL: '/' })
+              }
+            >
+              GitHub
+            </button>
+          </>
         )}
       </div>
     </nav>

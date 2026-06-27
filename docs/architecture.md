@@ -24,7 +24,7 @@ Browser ──> TanStack Start routes (SSR) ──> Server functions ──> Rep
   against a real in-memory SQLite database in tests. This is the seam that lets
   D1 be swapped for Postgres without touching feature code.
 - **Auth (`src/auth/`)** — `config.ts` builds a per-request Better Auth instance
-  (D1 adapter, GitHub OAuth, secure cookies). `session.ts` resolves the current
+  (D1 adapter, Google + GitHub OAuth, secure cookies). `session.ts` resolves the current
   user from request headers (server-only). `useAuthSession.ts` is the SSR-safe
   client hook.
 - **Database (`src/db/`)** — Drizzle schema, the D1 client factory, and

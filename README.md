@@ -31,7 +31,7 @@ demo. It is now **one full-stack SSR application** built with
 | Framework  | TanStack Start (React 19, SSR, Vite)     |
 | Hosting    | Cloudflare Workers                       |
 | Database   | Cloudflare D1 (SQLite) via Drizzle ORM   |
-| Auth       | Better Auth (GitHub OAuth, D1 sessions)  |
+| Auth       | Better Auth (Google + GitHub OAuth, D1 sessions) |
 | Styling    | Tailwind CSS v4                          |
 | Tests      | Vitest + Testing Library                 |
 
@@ -43,7 +43,7 @@ together and why these choices were made.
 ```bash
 npm install
 
-# Local secrets — copy and fill in (GitHub OAuth + a random auth secret):
+# Local secrets — copy and fill in (Google and/or GitHub OAuth + a random auth secret):
 cp .dev.vars.example .dev.vars
 
 # Set up the local D1 database:
@@ -53,9 +53,10 @@ npm run db:migrate:local   # apply migrations to the local D1
 npm run dev                # http://localhost:3000
 ```
 
-For a GitHub OAuth app, set the callback URL to
-`http://localhost:3000/api/auth/callback/github`. Full setup and production
-deployment are documented in [`docs/deployment.md`](docs/deployment.md).
+Configure at least one OAuth provider (Google and/or GitHub) with the callback
+`http://localhost:3000/api/auth/callback/<provider>`. Full setup, production
+deployment, and how to add more providers are documented in
+[`docs/deployment.md`](docs/deployment.md).
 
 ## Project layout
 

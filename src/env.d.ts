@@ -9,8 +9,12 @@
 interface AppSecrets {
   BETTER_AUTH_SECRET: string
   BETTER_AUTH_URL: string
-  GITHUB_CLIENT_ID: string
-  GITHUB_CLIENT_SECRET: string
+  // OAuth provider credentials are optional: a provider registers only when its
+  // pair is set, so local dev can configure just one.
+  GITHUB_CLIENT_ID?: string
+  GITHUB_CLIENT_SECRET?: string
+  GOOGLE_CLIENT_ID?: string
+  GOOGLE_CLIENT_SECRET?: string
 }
 
 declare namespace Cloudflare {
