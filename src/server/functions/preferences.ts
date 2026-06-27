@@ -21,7 +21,7 @@ export const getPreferences = createServerFn({ method: 'GET' }).handler(
  * never from the payload; the input schema carries no user id.
  */
 export const updatePreferences = createServerFn({ method: 'POST' })
-  .inputValidator((data: PreferenceUpdateInput) =>
+  .validator((data: PreferenceUpdateInput) =>
     preferenceUpdateSchema.parse(data),
   )
   .handler(async ({ data }) => {

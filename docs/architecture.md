@@ -60,6 +60,29 @@ explicitly:
 `entries.pattern` is JSON-encoded `[max, min]` integer pairs — processed signal
 data only. No column stores raw audio.
 
+## Visual identity and assets
+
+The UI reproduces the 2019 Life Recorder look natively (no p5, no Sass):
+
+- **Fonts** — Aileron is self-hosted under `public/fonts/Aileron/` (CC0); the app
+  font stack is `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Aileron, sans-serif`, wired via `@font-face` + Tailwind `@theme` in
+  `src/styles.css`. (The legacy app always rendered this system-sans stack; its
+  NotoSerif/serif path was never applied.)
+- **Watercolor spiral** — the signature visual. The 41-image Seashore PNG set is
+  in `public/img/Seashore/`; `src/features/audio/themes.ts` defines `Seashore`
+  (full set) and `Seashore[Blue]` (curated blue subset). `PatternCanvas`
+  (`src/components/PatternCanvas.tsx`) draws the images on a spiral — a native
+  canvas port of the legacy p5 `Sketch.js` ring math. Each entry's `[max, min]`
+  points pick the image, ring/angle slot, and rotation. SSR renders the bare
+  `<canvas>`; images load client-side only.
+- **Scaling** — fluid `clamp()` scale tokens in `src/styles.css`
+  (`--text-clock`, etc.) replace the legacy 900px/700px breakpoint size swaps,
+  anchored to the original sizes.
+- **Navigation** — `BurgerNav` (`src/components/BurgerNav.tsx`) is a native
+  slide-in menu with `ProfileBlock`; `public/img/stranger.png` is the
+  anonymous avatar.
+
 ## Why these choices
 
 The framework, hosting, database, and auth decisions (and their fallbacks) are

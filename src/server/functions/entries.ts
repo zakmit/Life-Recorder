@@ -17,7 +17,7 @@ import type { z } from 'zod'
  * by the session user; the payload cannot set a different owner.
  */
 export const createEntry = createServerFn({ method: 'POST' })
-  .inputValidator((data: CreateEntryInput) => createEntrySchema.parse(data))
+  .validator((data: CreateEntryInput) => createEntrySchema.parse(data))
   .handler(async ({ data }) => {
     const user = await requireUser()
     const { entries } = getRepositories()
@@ -34,7 +34,7 @@ export const createEntry = createServerFn({ method: 'POST' })
 
 /** Latest entries for the signed-in user (cards view, paginated by cursor). */
 export const getLatestEntries = createServerFn({ method: 'GET' })
-  .inputValidator((data: unknown) => latestQuerySchema.parse(data ?? {}))
+  .validator((data: unknown) => latestQuerySchema.parse(data ?? {}))
   .handler(async ({ data }) => {
     const user = await requireUser()
     const { entries } = getRepositories()
@@ -52,7 +52,7 @@ export const getAllEntries = createServerFn({ method: 'GET' }).handler(
 
 /** Entries within a date window for the signed-in user (chart view). */
 export const getEntriesInRange = createServerFn({ method: 'GET' })
-  .inputValidator((data: z.infer<typeof RangeSchema>) =>
+  .validator((data: z.infer<typeof RangeSchema>) =>
     rangeQuerySchema.parse(data),
   )
   .handler(async ({ data }) => {
