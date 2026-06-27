@@ -280,7 +280,17 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 ## Implementation Units
 
-### U1. Repository Handoff and Modern Scaffold
+> **Handover status (2026-06-27):** All 8 units implemented on branch
+> `refactor/modernization`. Automated gates pass locally: `npm run typecheck`,
+> `npm run lint`, `npm test` (75 tests), `npm run build`, and
+> `npx wrangler deploy --dry-run` (D1 binding recognized). SSR smoke verified
+> for `/`, `/history`, `/settings`, `/api/auth/*` (all HTTP 200, no SSR errors).
+> **Remaining manual gates** (need real Cloudflare + GitHub OAuth credentials):
+> deployed smoke test, OAuth callback round-trip, and secure-cookie attribute
+> check — documented in `docs/deployment.md`. Legacy code preserved on
+> `obsolete-2019`; `frontend/`/`backend/` removed from the active branch.
+
+### U1. Repository Handoff and Modern Scaffold ✅
 
 **Goal:** Establish the modern app skeleton, root project instructions, and branch-friendly documentation before moving product behavior.
 
@@ -315,7 +325,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R1, R2, R3, R4, R11, R12.
 
-### U2. Persistence Model and Repository Layer
+### U2. Persistence Model and Repository Layer ✅
 
 **Goal:** Replace Mongoose models with a D1-backed schema and repository layer that preserves user preferences and timer-entry semantics.
 
@@ -344,7 +354,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R5, R6, R7, R10, AE1, AE2.
 
-### U3. Auth and Session-Owned Server Functions
+### U3. Auth and Session-Owned Server Functions ✅
 
 **Goal:** Replace Firebase client auth with server-owned session handling and protected data access.
 
@@ -380,7 +390,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R4, R5, R9, R10, AE2, AE3, AE4.
 
-### U4. Timer, Audio Analysis, and Pattern Rendering
+### U4. Timer, Audio Analysis, and Pattern Rendering ✅
 
 **Goal:** Rebuild the core recording experience with SSR-safe browser modules and preserve the no-raw-audio privacy posture.
 
@@ -413,7 +423,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R5, R6, R8, R12, AE1, AE3.
 
-### U5. History, Table, and Chart Surfaces
+### U5. History, Table, and Chart Surfaces ✅
 
 **Goal:** Recreate the current review surfaces so users can inspect recorded time through cards, tables, and charted summaries.
 
@@ -445,7 +455,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R5, R7, R8, AE1.
 
-### U6. Settings and Preferences
+### U6. Settings and Preferences ✅
 
 **Goal:** Preserve configurable timer preferences and theme/display settings through the new full-stack app.
 
@@ -472,7 +482,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R5, R9, R10, AE2.
 
-### U7. Deployment and Runtime Configuration
+### U7. Deployment and Runtime Configuration ✅
 
 **Goal:** Make the app deployable as a single free-friendly demo without Heroku or a separate backend process.
 
@@ -499,7 +509,7 @@ The exact TanStack Start generated filenames can shift with the scaffold, but th
 
 **Covers:** R4, R9, R10, R11, AE4.
 
-### U8. Cleanup, Documentation, and Future Direction
+### U8. Cleanup, Documentation, and Future Direction ✅
 
 **Goal:** Finish the refactor as a coherent baseline and document how later ML/client-side interaction work should proceed.
 
@@ -578,15 +588,15 @@ The final modernization branch is not complete until the app can be deployed as 
 
 ## Definition of Done
 
-- `obsolete-2019` remains the recoverable legacy branch.
-- The main modernization branch contains one full-stack app structure rather than active split `frontend/` and `backend/` apps.
-- Firebase client UI, Express server routing, Mongoose models, Heroku setup, and CRA scripts are removed from the active app path.
-- Auth is server-owned and protects user data.
-- Preferences and timer entries persist through the chosen free-friendly data layer.
-- Timer, audio pattern extraction, pattern rendering, history cards, table, charts, and settings all exist at baseline parity.
-- The public demo deploys on the chosen free-friendly target without a separate backend machine.
-- The README and docs explain setup, deployment, architecture, and future ML direction.
-- Verification gates in this plan pass, or any skipped gate is documented with a concrete reason and follow-up.
+- ✅ `obsolete-2019` remains the recoverable legacy branch.
+- ✅ The main modernization branch contains one full-stack app structure rather than active split `frontend/` and `backend/` apps.
+- ✅ Firebase client UI, Express server routing, Mongoose models, Heroku setup, and CRA scripts are removed from the active app path.
+- ✅ Auth is server-owned (Better Auth + D1 sessions) and protects user data; every server function derives ownership from the session, not the payload.
+- ✅ Preferences and timer entries persist through Cloudflare D1 via the repository layer.
+- ✅ Timer, audio pattern extraction, pattern rendering, history cards, table, charts, and settings all exist at baseline parity.
+- ⏳ The public demo deploys on Cloudflare without a separate backend machine — config + dry-run validated; actual deploy is a manual gate needing real credentials (`docs/deployment.md`).
+- ✅ The README and docs explain setup, deployment, architecture, and future ML direction.
+- ✅ Automated verification gates pass (typecheck, lint, 75 tests, build, dry-run). The deployed smoke test is the one skipped gate, documented above with its concrete prerequisites.
 
 ---
 
