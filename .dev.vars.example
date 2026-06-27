@@ -1,0 +1,13 @@
+# Copy to .dev.vars for local development (never commit the real file).
+# These are read by Wrangler / the Worker runtime as environment variables.
+
+# Better Auth — a 32+ char random secret used to sign sessions/cookies.
+BETTER_AUTH_SECRET="replace-with-a-long-random-secret"
+
+# Base URL of the app. Local dev default shown; set to the deployed URL in prod.
+BETTER_AUTH_URL="http://localhost:3000"
+
+# GitHub OAuth app credentials (Settings > Developer settings > OAuth Apps).
+# Authorization callback URL: <BETTER_AUTH_URL>/api/auth/callback/github
+GITHUB_CLIENT_ID="your-github-oauth-client-id"
+GITHUB_CLIENT_SECRET="your-github-oauth-client-secret"
