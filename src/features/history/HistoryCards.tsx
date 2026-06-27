@@ -1,5 +1,6 @@
 import { PatternCanvas } from '#/components/PatternCanvas'
 import { timeToString } from '#/features/timer/format'
+import { DEFAULT_THEME } from '#/features/audio/themes'
 import type { Entry } from '#/db/schema'
 
 export type HistoryCardsProps = {
@@ -35,7 +36,16 @@ export function HistoryCards({ entries }: HistoryCardsProps) {
             </div>
           </div>
           <div className="flex justify-center bg-slate-50">
-            <PatternCanvas pattern={entry.pattern} width={280} height={140} />
+            {/* Card preview keeps the real watercolor spiral (legacy used
+                imgSize/5, radius/5 to scale the spiral down for cards). */}
+            <PatternCanvas
+              pattern={entry.pattern}
+              theme={DEFAULT_THEME}
+              width={280}
+              height={140}
+              imgSize={DEFAULT_THEME.imgSize / 5}
+              radius={DEFAULT_THEME.radius / 5}
+            />
           </div>
         </article>
       ))}

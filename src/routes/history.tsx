@@ -32,10 +32,12 @@ function HistoryPage() {
   const [tab, setTab] = useState<Tab>('cards')
 
   return (
-    <div>
+    <div className="min-h-screen">
       <BurgerNav />
-      <main className="mx-auto max-w-3xl p-6">
-        <h1 className="mb-4 text-xl font-semibold">History</h1>
+      <main className="mx-auto max-w-3xl px-6 pb-12 pt-24">
+        <h1 className="mb-6 text-2xl" style={{ fontWeight: 300 }}>
+          History
+        </h1>
 
         {!signedIn ? (
           <p className="text-slate-500">

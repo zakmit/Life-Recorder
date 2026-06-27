@@ -37,17 +37,24 @@ function SettingsPage() {
   const { preferences, signedIn } = Route.useLoaderData()
 
   return (
-    <div>
+    <div className="min-h-screen">
       <BurgerNav />
-      <main className="mx-auto max-w-2xl p-6">
-        <h1 className="mb-4 text-xl font-semibold">Settings</h1>
+      <main className="mx-auto max-w-2xl px-6 pb-12 pt-24">
+        <h1 className="mb-6 text-2xl" style={{ fontWeight: 300 }}>
+          Settings
+        </h1>
         {signedIn ? (
-          <SettingsForm
-            initial={preferences}
-            onSave={async (values) => {
-              await savePreferences(values)
-            }}
-          />
+          <div
+            className="rounded-lg p-8"
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.726)' }}
+          >
+            <SettingsForm
+              initial={preferences}
+              onSave={async (values) => {
+                await savePreferences(values)
+              }}
+            />
+          </div>
         ) : (
           <p className="text-slate-500">
             Sign in to change and save your preferences.
