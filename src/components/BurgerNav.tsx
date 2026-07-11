@@ -4,10 +4,6 @@ import { signIn, signOut } from '#/auth/client'
 import { useAuthSession } from '#/auth/useAuthSession'
 import { ProfileBlock } from './ProfileBlock'
 
-// Legacy .bm-menu panel background and .bm-overlay scrim.
-const PANEL_BG = '#c5c5c5f1'
-const OVERLAY_BG = 'rgba(117, 117, 117, 0.3)'
-const SUPPORT_COLOR = 'rgb(98, 107, 110)'
 const PANEL_WIDTH = 300
 
 /**
@@ -30,14 +26,10 @@ export function BurgerNav() {
           type="button"
           aria-label="Open menu"
           onClick={() => setOpen(true)}
-          className="fixed left-9 top-9 z-30 flex h-9 w-9 flex-col justify-between"
+          className="group fixed left-9 top-9 z-30 flex h-6 w-8 flex-col justify-between cursor-pointer"
         >
           {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="block h-[4px] w-full"
-              style={{ backgroundColor: SUPPORT_COLOR }}
-            />
+            <span key={i} className="block h-0.5 w-full bg-gray-main group-hover:opacity-80" />
           ))}
         </button>
       )}
@@ -48,8 +40,7 @@ export function BurgerNav() {
           type="button"
           aria-label="Close menu"
           onClick={close}
-          className="fixed inset-0 z-40 cursor-default"
-          style={{ background: OVERLAY_BG }}
+          className="fixed inset-0 z-40 cursor-default bg-nav-overlay"
         />
       )}
 
@@ -57,10 +48,9 @@ export function BurgerNav() {
       <nav
         aria-label="Main menu"
         aria-hidden={!open}
-        className="fixed left-0 top-0 z-50 h-full overflow-hidden transition-transform duration-300"
+        className="fixed left-0 top-0 z-50 h-full overflow-hidden bg-nav-panel transition-transform duration-300"
         style={{
           width: PANEL_WIDTH,
-          background: PANEL_BG,
           padding: '2.5em 1.5em 0',
           transform: open ? 'translateX(0)' : `translateX(-${PANEL_WIDTH}px)`,
         }}
@@ -69,8 +59,7 @@ export function BurgerNav() {
           type="button"
           aria-label="Close menu"
           onClick={close}
-          className="absolute right-5 top-4 h-6 w-6 text-xl leading-none"
-          style={{ color: SUPPORT_COLOR }}
+          className="absolute right-5 top-4 h-6 w-6 text-xl leading-none text-gray-main"
         >
           ×
         </button>

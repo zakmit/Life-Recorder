@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",
+    "@sglara/cn": "^1.0.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
     "@tanstack/react-router": "latest",
@@ -65,5 +66,15 @@
       "esbuild",
       "lightningcss"
     ]
+  },
+  "allowScripts": {
+    "esbuild@0.18.20": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true,
+    "better-sqlite3@12.11.1": true,
+    "fsevents@2.3.3": true,
+    "sharp@0.34.5": true,
+    "unrs-resolver@1.12.2": true,
+    "workerd@1.20260625.1": true
   }
 }
