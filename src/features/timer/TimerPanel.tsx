@@ -63,15 +63,12 @@ export function TimerPanel({
   onComplete,
   onPatternChange,
 }: TimerPanelProps) {
-  const [savedMsg, setSavedMsg] = useState<string | null>(null)
+  const [showSignInNotice, setShowSignInNotice] = useState(true)
   const timer = useTimer({
     pomodoroMinutes,
     onComplete: async (entry) => {
       if (canPersist) {
         await onComplete?.(entry)
-        setSavedMsg('Saved your session.')
-      } else {
-        setSavedMsg('Session finished. Sign in to save your history.')
       }
       timer.reset()
     },
@@ -95,6 +92,25 @@ export function TimerPanel({
           style={{ fontWeight: 300, fontSize: 'var(--text-task)' }}
         >
           {state.title}
+        </div>
+      )}
+
+      {!canPersist && showSignInNotice && (
+        <div
+          role="status"
+          aria-label="Session persistence"
+          className="fixed left-1/2 z-20 w-max max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-lg bg-white py-2 pl-4 pr-9 text-center text-xs text-slate-500 shadow-sm"
+          style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
+          You can try the timer now. Sign in to save your sessions to history.
+          <button
+            type="button"
+            aria-label="Dismiss sign-in notice"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-base leading-none text-slate-400 hover:text-slate-700"
+            onClick={() => setShowSignInNotice(false)}
+          >
+            ×
+          </button>
         </div>
       )}
 
@@ -170,14 +186,6 @@ export function TimerPanel({
             >
               Start
             </button>
-
-            {!canPersist && (
-              <p className="max-w-[16em] text-center text-sm text-slate-500">
-                You can try the timer now. Sign in to save your sessions to
-                history.
-              </p>
-            )}
-            {savedMsg && <p className="text-sm text-emerald-600">{savedMsg}</p>}
           </div>
         )}
 

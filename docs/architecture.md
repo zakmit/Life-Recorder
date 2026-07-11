@@ -44,7 +44,20 @@ explicitly:
    client-safe `UnauthorizedError`/`assertUser` live in `auth.ts`.
 2. **Better Auth's `useSession`** reads a store via hooks that are not safe in
    SSR, so the app uses `useAuthSession()` which resolves the session only after
-   mount. SSR (and first paint) render the anonymous shell, then hydrate.
+   mount. SSR and first paint render a neutral pending shell; anonymous-only
+   data is not selected until the session lookup succeeds without a user.
+
+## Preference authority
+
+`PreferencesProvider` is mounted once in the root document and is the reactive
+preference source for the timer and Settings page. Browser preferences live in
+a versioned, schema-validated local-storage value that is read only after
+mount. Signed-out edits update that local value. After login, an existing
+server row replaces it; when no row exists, an atomic initialize-if-absent
+operation seeds the account from the local value and returns the canonical row.
+Signed-in saves are serialized, persisted to the session-owned server row
+first, and copied locally only after success. Login, logout, and lookup failures
+are distinct states so a failed auth request can never masquerade as anonymous.
 
 ## Data model
 

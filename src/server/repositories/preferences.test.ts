@@ -48,4 +48,43 @@ describe('preferences repository', () => {
       DEFAULT_PREFERENCES.pomoMinutes,
     )
   })
+
+  it('initializes a missing row without replacing the first writer', async () => {
+    const first = await repo.initializeIfAbsent('alice', {
+      themeName: 'Seashore',
+      pomoMinutes: 25,
+      showHours: false,
+    })
+    const second = await repo.initializeIfAbsent('alice', {
+      themeName: 'Seashore[Blue]',
+      pomoMinutes: 50,
+      showHours: true,
+    })
+
+    expect(first).toEqual(second)
+    expect(second).toMatchObject({
+      userId: 'alice',
+      themeName: 'Seashore',
+      pomoMinutes: 25,
+      showHours: false,
+    })
+  })
+
+  it('returns one canonical first-writer row to concurrent initializers', async () => {
+    const [first, second] = await Promise.all([
+      repo.initializeIfAbsent('alice', {
+        themeName: 'Seashore',
+        pomoMinutes: 25,
+        showHours: false,
+      }),
+      repo.initializeIfAbsent('alice', {
+        themeName: 'Seashore[Blue]',
+        pomoMinutes: 50,
+        showHours: true,
+      }),
+    ])
+
+    expect(first).toEqual(second)
+    expect(await repo.find('alice')).toEqual(first)
+  })
 })

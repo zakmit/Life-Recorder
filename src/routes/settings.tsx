@@ -1,40 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { BurgerNav } from '#/components/BurgerNav'
 import { SettingsForm } from '#/features/settings/SettingsForm'
-import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
-import {
-  fetchPreferences,
-  savePreferences,
-} from '#/features/settings/preferences-client'
-import { UnauthorizedError } from '#/server/auth'
-import type { PreferencesForm } from '#/features/settings/preferences-schema'
-
-type LoaderData = { preferences: PreferencesForm; signedIn: boolean }
+import { usePreferences } from '#/features/settings/PreferencesProvider'
 
 export const Route = createFileRoute('/settings')({
   component: SettingsPage,
-  loader: async (): Promise<LoaderData> => {
-    try {
-      const prefs = await fetchPreferences()
-      return {
-        preferences: {
-          themeName: prefs.themeName as PreferencesForm['themeName'],
-          pomoMinutes: prefs.pomoMinutes,
-          showHours: prefs.showHours,
-        },
-        signedIn: true,
-      }
-    } catch (err) {
-      if (err instanceof UnauthorizedError) {
-        return { preferences: DEFAULT_FORM, signedIn: false }
-      }
-      throw err
-    }
-  },
 })
 
 function SettingsPage() {
-  const { preferences, signedIn } = Route.useLoaderData()
+  const { preferences, status, save, retry, error } = usePreferences()
 
   return (
     <div className="min-h-screen">
@@ -43,22 +17,40 @@ function SettingsPage() {
         <h1 className="mb-6 text-2xl" style={{ fontWeight: 300 }}>
           Settings
         </h1>
-        {signedIn ? (
+        {status === 'pending' || status === 'session-error' ? (
+          <p role="status" className="text-slate-500">
+            {status === 'pending'
+              ? 'Loading settings…'
+              : 'Could not verify your session.'}
+          </p>
+        ) : (
           <div
             className="rounded-lg p-8"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.726)' }}
           >
             <SettingsForm
+              key={JSON.stringify(preferences)}
               initial={preferences}
-              onSave={async (values) => {
-                await savePreferences(values)
-              }}
+              onSave={save}
             />
+            {status === 'error' && (
+              <div role="alert" className="mt-4 text-sm text-red-600">
+                <p>{error?.message ?? 'Could not synchronize settings.'}</p>
+                <button
+                  type="button"
+                  className="mt-1 underline"
+                  onClick={retry}
+                >
+                  Retry
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <p className="text-slate-500">
-            Sign in to change and save your preferences.
-          </p>
+        )}
+        {status === 'session-error' && (
+          <button type="button" className="mt-3 underline" onClick={retry}>
+            Retry
+          </button>
         )}
       </main>
     </div>

@@ -21,6 +21,10 @@ export type PreferenceUpdate = Partial<{
   showHours: boolean
 }>
 
+export type PreferenceLookup =
+  | { present: false }
+  | { present: true; preferences: Preferences }
+
 /**
  * Per-user preference reads/writes. Every method is scoped by `userId`; there
  * is no cross-user access path.
@@ -35,6 +39,14 @@ export function makePreferencesRepository(db: Database) {
         .where(eq(preferences.userId, userId))
         .limit(1)
       return rows[0] ?? null
+    },
+
+    /** Preserves whether the row exists, even when its values equal defaults. */
+    async lookup(userId: string): Promise<PreferenceLookup> {
+      const found = await this.find(userId)
+      return found === null
+        ? { present: false }
+        : { present: true, preferences: found }
     },
 
     /** Returns stored preferences merged onto defaults. */
@@ -92,6 +104,27 @@ export function makePreferencesRepository(db: Database) {
 
       const saved = await this.find(userId)
       return saved!
+    },
+
+    /**
+     * Insert initial preferences without overwriting an existing row. The
+     * canonical row is read back so concurrent callers converge on whichever
+     * insert won the unique user-id constraint.
+     */
+    async initializeIfAbsent(
+      userId: string,
+      values: PreferenceValues,
+    ): Promise<Preferences> {
+      await db
+        .insert(preferences)
+        .values({ userId, ...values, updatedAt: new Date() })
+        .onConflictDoNothing({ target: preferences.userId })
+
+      const canonical = await this.find(userId)
+      if (canonical === null) {
+        throw new Error('Preference initialization did not produce a row')
+      }
+      return canonical
     },
   }
 }

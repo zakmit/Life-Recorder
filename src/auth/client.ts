@@ -6,4 +6,12 @@ import { createAuthClient } from 'better-auth/react'
  */
 export const authClient = createAuthClient()
 
-export const { signIn, signOut, useSession } = authClient
+export const AUTH_SESSION_CHANGE_EVENT = 'life-recorder:auth-session-change'
+
+export const { signIn, useSession } = authClient
+
+export async function signOut() {
+  const result = await authClient.signOut()
+  window.dispatchEvent(new Event(AUTH_SESSION_CHANGE_EVENT))
+  return result
+}

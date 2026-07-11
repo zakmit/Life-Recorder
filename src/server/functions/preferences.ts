@@ -1,20 +1,30 @@
 import { createServerFn } from '@tanstack/react-start'
-import { requireUser } from '#/server/auth.server'
-import { getRepositories } from '#/server/repositories'
 import { preferenceUpdateSchema } from '#/server/validation'
+import {
+  initializePreferencesForSession,
+  readPreferencesForSession,
+  updatePreferencesForSession,
+} from './preferences.handlers.server'
 import type { PreferenceUpdateInput } from '#/server/validation'
 
 /**
- * Read the signed-in user's preferences (merged onto defaults).
+ * Read the signed-in user's preferences while preserving row presence.
  * Anonymous callers are rejected by `requireUser`.
  */
 export const getPreferences = createServerFn({ method: 'GET' }).handler(
-  async () => {
-    const user = await requireUser()
-    const { preferences } = getRepositories()
-    return preferences.findOrDefault(user.id)
-  },
+  readPreferencesForSession,
 )
+
+/**
+ * Initialize preferences only when the signed-in user has no row. Ownership
+ * comes exclusively from the session; concurrent callers receive the same
+ * canonical first-writer row.
+ */
+export const initializePreferences = createServerFn({ method: 'POST' })
+  .validator((data: PreferenceUpdateInput) =>
+    preferenceUpdateSchema.parse(data),
+  )
+  .handler(initializePreferencesForSession)
 
 /**
  * Update the signed-in user's preferences. Ownership comes from the session,
@@ -24,8 +34,4 @@ export const updatePreferences = createServerFn({ method: 'POST' })
   .validator((data: PreferenceUpdateInput) =>
     preferenceUpdateSchema.parse(data),
   )
-  .handler(async ({ data }) => {
-    const user = await requireUser()
-    const { preferences } = getRepositories()
-    return preferences.upsert(user.id, data)
-  })
+  .handler(updatePreferencesForSession)

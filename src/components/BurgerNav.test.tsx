@@ -13,16 +13,11 @@ vi.mock('#/auth/client', () => ({
   signOut: vi.fn(),
 }))
 
-type SessionResult = {
-  session: { user: ProfileUser } | null
-  isPending: boolean
-}
-const sessionMock = vi.fn<() => SessionResult>(() => ({
-  session: null,
-  isPending: false,
+const preferencesMock = vi.fn<() => { user: ProfileUser | undefined }>(() => ({
+  user: undefined,
 }))
-vi.mock('#/auth/useAuthSession', () => ({
-  useAuthSession: () => sessionMock(),
+vi.mock('#/features/settings/PreferencesProvider', () => ({
+  usePreferences: () => preferencesMock(),
 }))
 
 const { BurgerNav } = await import('./BurgerNav')
@@ -43,7 +38,7 @@ describe('BurgerNav', () => {
   })
 
   it('signed out: profile block + Sign in + nav links', () => {
-    sessionMock.mockReturnValue({ session: null, isPending: false })
+    preferencesMock.mockReturnValue({ user: undefined })
     const { getByText } = render(<BurgerNav />)
     expect(getByText('Hello,')).toBeTruthy()
     expect(getByText('Stranger.')).toBeTruthy()
@@ -54,16 +49,13 @@ describe('BurgerNav', () => {
   })
 
   it('signed in: name + Sign out', () => {
-    sessionMock.mockReturnValue({
-      session: {
-        user: {
-          id: 'u1',
-          name: 'Grace Hopper',
-          email: 'grace@example.com',
-          image: null,
-        },
+    preferencesMock.mockReturnValue({
+      user: {
+        id: 'u1',
+        name: 'Grace Hopper',
+        email: 'grace@example.com',
+        image: null,
       },
-      isPending: false,
     })
     const { getByText } = render(<BurgerNav />)
     expect(getByText('Grace Hopper')).toBeTruthy()

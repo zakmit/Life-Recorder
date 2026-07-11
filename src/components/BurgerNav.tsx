@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { signIn, signOut } from '#/auth/client'
-import { useAuthSession } from '#/auth/useAuthSession'
+import { usePreferences } from '#/features/settings/PreferencesProvider'
 import { ProfileBlock } from './ProfileBlock'
 
 const PANEL_WIDTH = 300
@@ -14,8 +14,7 @@ const PANEL_WIDTH = 300
  */
 export function BurgerNav() {
   const [open, setOpen] = useState(false)
-  const { session } = useAuthSession()
-  const user = session?.user
+  const { user } = usePreferences()
   const close = () => setOpen(false)
 
   return (
@@ -29,7 +28,10 @@ export function BurgerNav() {
           className="group fixed left-9 top-9 z-30 flex h-6 w-8 flex-col justify-between cursor-pointer"
         >
           {[0, 1, 2].map((i) => (
-            <span key={i} className="block h-0.5 w-full bg-gray-main group-hover:opacity-80" />
+            <span
+              key={i}
+              className="block h-0.5 w-full bg-gray-main group-hover:opacity-80"
+            />
           ))}
         </button>
       )}

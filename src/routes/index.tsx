@@ -1,38 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
 import { TimerPanel } from '#/features/timer/TimerPanel'
-import { useAuthSession } from '#/auth/useAuthSession'
 import { createEntry } from '#/server/functions/entries'
-import { fetchPreferences } from '#/features/settings/preferences-client'
-import { DEFAULT_FORM } from '#/features/settings/preferences-schema'
+import { usePreferences } from '#/features/settings/PreferencesProvider'
 import { BurgerNav } from '#/components/BurgerNav'
 import { PatternCanvas } from '#/components/PatternCanvas'
 import { themeByName } from '#/features/audio/themes'
-import { UnauthorizedError } from '#/server/auth'
-import type { PreferencesForm } from '#/features/settings/preferences-schema'
 import type { PatternPoint } from '#/features/audio/pattern'
 import type { CompletedTimer } from '#/features/timer/useTimer'
 
-type LoaderData = { preferences: PreferencesForm }
-
 export const Route = createFileRoute('/')({
   component: Home,
-  loader: async (): Promise<LoaderData> => {
-    try {
-      const prefs = await fetchPreferences()
-      return {
-        preferences: {
-          themeName: prefs.themeName as PreferencesForm['themeName'],
-          pomoMinutes: prefs.pomoMinutes,
-          showHours: prefs.showHours,
-        },
-      }
-    } catch (err) {
-      // Anonymous visitors get the default timer shell.
-      if (err instanceof UnauthorizedError) return { preferences: DEFAULT_FORM }
-      throw err
-    }
-  },
 })
 
 // The legacy app seeded an idle spiral of random points (49) so the background
@@ -57,14 +35,14 @@ function useViewportSize() {
 }
 
 function Home() {
-  const { preferences } = Route.useLoaderData()
-  const { session, isPending } = useAuthSession()
-  const signedIn = !!session?.user
+  const { preferences, signedIn, status, retry, error } = usePreferences()
 
   const theme = themeByName(preferences.themeName)
   const { width, height } = useViewportSize()
   const seed = useMemo(() => seedPattern(), [])
-  const [livePattern, setLivePattern] = useState<ReadonlyArray<PatternPoint>>([])
+  const [livePattern, setLivePattern] = useState<ReadonlyArray<PatternPoint>>(
+    [],
+  )
 
   // Show the live recording pattern once it has points, else the idle seed.
   const spiralPattern = livePattern.length > 0 ? livePattern : seed
@@ -99,13 +77,30 @@ function Home() {
 
       <BurgerNav />
 
-      <TimerPanel
-        pomodoroMinutes={preferences.pomoMinutes}
-        showHours={preferences.showHours}
-        canPersist={signedIn && !isPending}
-        onComplete={handleComplete}
-        onPatternChange={setLivePattern}
-      />
+      {status === 'pending' || status === 'session-error' ? (
+        <p
+          role="status"
+          className="absolute inset-x-0 top-1/2 text-center text-sm text-slate-500"
+        >
+          Loading your timer…
+        </p>
+      ) : (
+        <TimerPanel
+          pomodoroMinutes={preferences.pomoMinutes}
+          showHours={preferences.showHours}
+          canPersist={signedIn}
+          onComplete={handleComplete}
+          onPatternChange={setLivePattern}
+        />
+      )}
+      {(status === 'error' || status === 'session-error') && (
+        <div className="fixed inset-x-4 bottom-4 z-30 mx-auto max-w-md rounded-lg bg-white p-3 text-center text-sm shadow">
+          <p>{error?.message ?? 'Could not synchronize your session.'}</p>
+          <button type="button" className="mt-2 underline" onClick={retry}>
+            Retry
+          </button>
+        </div>
+      )}
     </div>
   )
 }

@@ -35,8 +35,21 @@ describe('TimerPanel', () => {
   })
 
   it('shows the sign-in hint for anonymous users', () => {
-    const { getByText } = render(<TimerPanel canPersist={false} />)
-    expect(getByText(/sign in to save your sessions/i)).toBeTruthy()
+    const { getByRole, queryByRole } = render(<TimerPanel canPersist={false} />)
+    const banner = getByRole('status', { name: /session persistence/i })
+    expect(banner.textContent).toMatch(/sign in to save your sessions/i)
+    expect(banner.className).toContain('fixed')
+    fireEvent.click(getByRole('button', { name: /dismiss sign-in notice/i }))
+    expect(queryByRole('status', { name: /session persistence/i })).toBeNull()
+  })
+
+  it('keeps the anonymous sign-in banner visible while running', async () => {
+    const { getByRole } = render(<TimerPanel canPersist={false} />)
+    fireEvent.click(getByRole('button', { name: 'Start' }))
+    await waitFor(() =>
+      expect(getByRole('button', { name: 'End' })).toBeTruthy(),
+    )
+    expect(getByRole('status', { name: /session persistence/i })).toBeTruthy()
   })
 
   it('still lets anonymous users start the timer', () => {
