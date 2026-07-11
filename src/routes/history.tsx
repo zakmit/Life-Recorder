@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { BarChart3, LayoutGrid, TableProperties } from 'lucide-react'
 import { BurgerNav } from '#/components/BurgerNav'
 import { HistoryCards } from '#/features/history/HistoryCards'
 import { HistoryTable } from '#/features/history/HistoryTable'
@@ -66,10 +67,8 @@ export function HistoryPage() {
   return (
     <div className="min-h-screen">
       <BurgerNav />
-      <main className="mx-auto max-w-3xl px-6 pb-12 pt-24">
-        <h1 className="mb-6 text-2xl" style={{ fontWeight: 300 }}>
-          History
-        </h1>
+      <main className="relative px-4 pb-12 pt-24">
+        <h1 className="sr-only">History</h1>
 
         {(status === 'pending' ||
           status === 'session-error' ||
@@ -114,19 +113,25 @@ export function HistoryPage() {
         )}
         {showHistory && (
           <>
-            <div className="mb-4 flex gap-2" role="tablist">
-              {(['cards', 'table', 'charts'] as const).map((t) => (
+            <div className="history-view-switcher" role="tablist">
+              {(
+                [
+                  { value: 'charts', label: 'Charts', icon: BarChart3 },
+                  { value: 'table', label: 'Table', icon: TableProperties },
+                  { value: 'cards', label: 'Cards', icon: LayoutGrid },
+                ] as const
+              ).map(({ value, label, icon: Icon }) => (
                 <button
-                  key={t}
+                  key={value}
                   type="button"
                   role="tab"
-                  aria-selected={tab === t}
-                  className={`rounded px-3 py-1 text-sm capitalize ${
-                    tab === t ? 'bg-slate-800 text-white' : 'bg-slate-200'
-                  }`}
-                  onClick={() => setTab(t)}
+                  aria-label={label}
+                  aria-selected={tab === value}
+                  className="history-view-button"
+                  onClick={() => setTab(value)}
                 >
-                  {t}
+                  <Icon aria-hidden="true" />
+                  <span className="sr-only">{label}</span>
                 </button>
               ))}
             </div>

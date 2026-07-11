@@ -55,15 +55,17 @@ describe('HistoryTable', () => {
 })
 
 describe('TimeSummaryChart', () => {
-  it('renders a chart with data', () => {
-    const { getByRole } = render(
+  it('renders the statistics shell with data', () => {
+    const { getByText } = render(
       <TimeSummaryChart entries={[entry(), entry({ id: 'e2' })]} />,
     )
-    expect(getByRole('img', { name: /recorded time per day/i })).toBeTruthy()
+    expect(getByText('Recorder Events')).toBeTruthy()
+    expect(getByText('Eaten Pomodoros')).toBeTruthy()
   })
 
-  it('shows an empty state', () => {
+  it('shows chart empty states', () => {
     const { getByText } = render(<TimeSummaryChart entries={[]} />)
-    expect(getByText(/no data to chart yet/i)).toBeTruthy()
+    expect(getByText(/no recorded events for this range/i)).toBeTruthy()
+    expect(getByText(/no pomodoros for this range/i)).toBeTruthy()
   })
 })
